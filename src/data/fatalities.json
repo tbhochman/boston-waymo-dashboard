@@ -1,0 +1,246 @@
+{
+  "bostonFatalities": {
+    "byYear": [
+      {
+        "year": 2016,
+        "deaths": 18
+      },
+      {
+        "year": 2017,
+        "deaths": 17
+      },
+      {
+        "year": 2018,
+        "deaths": 20
+      },
+      {
+        "year": 2019,
+        "deaths": 11
+      },
+      {
+        "year": 2020,
+        "deaths": 14
+      },
+      {
+        "year": 2021,
+        "deaths": 17
+      },
+      {
+        "year": 2022,
+        "deaths": 24
+      },
+      {
+        "year": 2023,
+        "deaths": 16
+      },
+      {
+        "year": 2024,
+        "deaths": 18
+      },
+      {
+        "year": 2025,
+        "deaths": 19
+      },
+      {
+        "year": 2026,
+        "deaths": 18,
+        "note": "Projected from 6 YTD"
+      }
+    ],
+    "fatalitySource": "Boston Vision Zero / MassDOT crash data",
+    "delayStart": "2016-10-01",
+    "causeBreakdown": {
+      "drunkDriving": 0.41,
+      "speeding": 0.22,
+      "distraction": 0.09,
+      "other": 0.28
+    }
+  },
+  "waymoSafety": {
+    "injuryCrashReduction": 0.85,
+    "pedestrianInjuryReduction": 0.92,
+    "intersectionCrashReduction": 0.96,
+    "conservativeVMTShare": 0.0176,
+    "waymoRideshareShare": 0.22,
+    "waymoRideshareShareSource": "Waymo reached ~22% of the San Francisco rideshare market by end of 2024",
+    "milesAnalyzed": "7.1 million",
+    "rideHailVMTShare": {
+      "boston": 0.08,
+      "sf": 0.128,
+      "source": "Fehr & Peers (2019)",
+      "sourceUrl": "https://www.prnewswire.com/news-releases/new-study-finds-over-97-of-vehicle-miles-traveled-in-major-us-cities-are-completed-by-personal-and-commercial-vehicles-300896095.html",
+      "note": "Ride-hail share of city-core VMT. The 1.76% effective VMT share is derived from Boston ride-hail VMT (~8%) × observed Waymo rideshare penetration in SF (~22%)."
+    },
+    "rideHailSafetyComparison": {
+      "waymo": {
+        "accidentsPerMillionMiles": 0.02,
+        "metric": "serious injuries per million miles",
+        "source": "Kusano et al., Traffic Injury Prevention (2025), 56.7M miles"
+      },
+      "uber": {
+        "accidentsPerMillionMiles": 0.45,
+        "fatalitiesPer100MVMT": 0.87,
+        "metric": "accidents per million miles",
+        "source": "Uber Safety Report (2021–2022)"
+      },
+      "lyft": {
+        "accidentsPerMillionMiles": 0.38,
+        "fatalitiesPer100MVMT": 0.85,
+        "metric": "accidents per million miles",
+        "source": "Lyft Safety Report (2021–2022)"
+      },
+      "nationalAverage": {
+        "fatalitiesPer100MVMT": 1.35,
+        "source": "NHTSA FARS"
+      },
+      "caveat": "Methodologies differ across these sources. Waymo data uses police-reported incidents matched to location baselines; Uber/Lyft figures are self-reported. Direct comparison should be interpreted with caution."
+    },
+    "studies": [
+      {
+        "name": "Kusano et al. (2024)",
+        "journal": "Traffic Injury Prevention",
+        "finding": "85% fewer any-injury-reported crashes over 7.1M autonomous miles",
+        "url": "https://doi.org/10.1080/15389588.2024.2380786"
+      },
+      {
+        "name": "Kusano et al. (2025)",
+        "journal": "Traffic Injury Prevention",
+        "finding": "85% fewer suspected serious injury+ crashes, 79% fewer any-injury-reported crashes over 56.7M miles",
+        "url": "https://doi.org/10.1080/15389588.2025.2499887"
+      },
+      {
+        "name": "Swiss Re / Waymo (2024)",
+        "journal": "Swiss Re Institute",
+        "finding": "Waymo vehicles had zero bodily injury claims vs. human baseline",
+        "url": "https://www.swissre.com/institute/research/topics-and-risk-dialogues/digital-business-model-and-cyber-risk/autonomous-vehicles-waymo-insurance.html"
+      }
+    ]
+  },
+  "permitTimeline": [
+    {
+      "city": "Los Angeles, CA",
+      "testStart": "2023-03",
+      "commercialLaunch": "2024-03",
+      "months": 12,
+      "status": "approved"
+    },
+    {
+      "city": "Austin, TX",
+      "testStart": "2024-01",
+      "commercialLaunch": "2025-04",
+      "months": 15,
+      "status": "approved"
+    },
+    {
+      "city": "Atlanta, GA",
+      "testStart": "2025-01",
+      "commercialLaunch": "2025-06",
+      "months": 5,
+      "status": "approved"
+    },
+    {
+      "city": "Boston, MA",
+      "testStart": "2017-01",
+      "commercialLaunch": null,
+      "months": 111,
+      "status": "waiting",
+      "note": "AV testing with safety drivers since 2017 — still no legislation permitting driverless operation"
+    }
+  ],
+  "timeline": [
+    {
+      "date": "Oct 2016",
+      "event": "Baker signs Executive Order 572",
+      "detail": "Creates AV testing framework; MassDOT to oversee testing program",
+      "cumulativeDeaths": 0
+    },
+    {
+      "date": "2017",
+      "event": "nuTonomy & Optimus Ride begin testing in Boston",
+      "detail": "First AV companies approved under EO 572 — safety drivers required",
+      "cumulativeDeaths": 17
+    },
+    {
+      "date": "Sept 2019",
+      "event": "MassDOT updates ADS testing application",
+      "detail": "Revised process, but no path to driverless commercial operation",
+      "cumulativeDeaths": 62
+    },
+    {
+      "date": "Jan 2025",
+      "event": "Driscoll & Cahill file AV legalization bills",
+      "detail": "First legislation to permit fully autonomous vehicles on MA roads",
+      "cumulativeDeaths": 137
+    },
+    {
+      "date": "Oct 2025",
+      "event": "Boston City Council pushes back",
+      "detail": "Proposes requiring human safety operators in all AV ride-hail vehicles",
+      "cumulativeDeaths": 151
+    },
+    {
+      "date": "Feb 2026",
+      "event": "Waymo announces return to Boston",
+      "detail": "Manual-drive testing to validate 6th-gen system for local conditions",
+      "cumulativeDeaths": 155
+    },
+    {
+      "date": "Apr 2026",
+      "event": "Still no legislation permitting driverless operation",
+      "detail": "Massachusetts remains without a legal framework for autonomous ride-hail",
+      "cumulativeDeaths": 161
+    }
+  ],
+  "sources": [
+    {
+      "name": "NHTSA FARS",
+      "description": "Fatality Analysis Reporting System — national traffic fatality data",
+      "url": "https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars"
+    },
+    {
+      "name": "Boston Vision Zero",
+      "description": "City of Boston traffic safety initiative and crash data",
+      "url": "https://www.boston.gov/departments/transportation/vision-zero"
+    },
+    {
+      "name": "Analyze Boston (Open Data)",
+      "description": "City of Boston open data portal — Vision Zero fatality and crash datasets",
+      "url": "https://data.boston.gov/dataset/vision-zero-fatality-records"
+    },
+    {
+      "name": "MassDOT Crash Data",
+      "description": "Massachusetts Department of Transportation crash data portal",
+      "url": "https://www.mass.gov/motor-vehicle-crash-data"
+    },
+    {
+      "name": "Kusano et al. (2024)",
+      "description": "Peer-reviewed study: 85% fewer any-injury-reported crashes in 7.1M Waymo miles",
+      "url": "https://doi.org/10.1080/15389588.2024.2380786"
+    },
+    {
+      "name": "Swiss Re / Waymo Insurance Study (2024)",
+      "description": "Zero bodily injury claims for Waymo fleet vs. human baseline",
+      "url": "https://www.swissre.com/institute/research/topics-and-risk-dialogues/digital-business-model-and-cyber-risk/autonomous-vehicles-waymo-insurance.html"
+    },
+    {
+      "name": "MA Executive Order 572 (2016)",
+      "description": "Governor Baker's executive order creating the AV testing framework in Massachusetts",
+      "url": "https://www.mass.gov/executive-orders/no-572-to-promote-the-testing-and-deployment-of-highly-automated-driving"
+    },
+    {
+      "name": "Fehr & Peers Ride-Hail VMT Study (2019)",
+      "description": "Ride-hail accounts for 1–13% of city-core VMT across major US cities (Boston: ~8%, SF: 12.8%)",
+      "url": "https://www.prnewswire.com/news-releases/new-study-finds-over-97-of-vehicle-miles-traveled-in-major-us-cities-are-completed-by-personal-and-commercial-vehicles-300896095.html"
+    },
+    {
+      "name": "Kusano et al. (2025) — 56.7M Miles",
+      "description": "Updated peer-reviewed study: 85% fewer suspected serious injury+ crashes over 56.7M Waymo miles",
+      "url": "https://doi.org/10.1080/15389588.2025.2499887"
+    },
+    {
+      "name": "YipitData / App Economy Insights — Waymo SF Market Share",
+      "description": "Waymo reached ~22% of the San Francisco rideshare market by end of 2024 (YipitData via a16z)",
+      "url": "https://www.appeconomyinsights.com/p/waymo-rideshare-revolution"
+    }
+  ]
+}

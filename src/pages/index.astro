@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LiveCounter from '../components/LiveCounter.astro';
+import Timeline from '../components/Timeline.astro';
+import SafetyData from '../components/SafetyData.astro';
+import CityComparison from '../components/CityComparison.astro';
+import Methodology from '../components/Methodology.astro';
+---
+
+<Layout title="Boston Waymo Delay Dashboard — Preventable Deaths Counter">
+  <main>
+    <LiveCounter />
+    <Timeline />
+    <SafetyData />
+    <CityComparison />
+    <Methodology />
+  </main>
+
+  <footer class="footer">
+    <p>
+      Built with public data. All sources cited.
+      <a href="https://github.com/tbhochman/boston-waymo-dashboard" target="_blank" rel="noopener">
+        View source on GitHub
+      </a>
+    </p>
+  </footer>
+</Layout>

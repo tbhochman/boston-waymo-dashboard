@@ -1,0 +1,71 @@
+---
+import data from '../data/fatalities.json';
+
+const permits = data.permitTimeline;
+// Time axis: Jan 2017 to Jun 2026 = ~113 months
+const axisStart = new Date(2017, 0, 1).getTime();
+const axisEnd = new Date(2026, 5, 1).getTime();
+const axisSpan = axisEnd - axisStart;
+
+function monthToTime(ym: string) {
+  const [y, m] = ym.split('-').map(Number);
+  return new Date(y, m - 1, 1).getTime();
+}
+
+const cityBars = permits.map(city => {
+  const start = monthToTime(city.testStart);
+  const end = city.commercialLaunch ? monthToTime(city.commercialLaunch) : axisEnd;
+  return {
+    city: city.city.replace(/, \w+$/, ''),
+    left: Math.max(((start - axisStart) / axisSpan) * 100, 0),
+    width: ((end - start) / axisSpan) * 100,
+    status: city.status,
+    months: city.months,
+  };
+});
+
+const axisYears = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
+const yearMarks = axisYears.map(y => ({
+  year: y,
+  left: ((new Date(y, 0, 1).getTime() - axisStart) / axisSpan) * 100,
+}));
+---
+
+<section class="section">
+  <div class="container">
+    <div class="data-grid">
+      <div class="data-panel">
+        <h3>Meanwhile, Elsewhere</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">
+          Months from first Waymo testing to commercial ride-hail service
+        </p>
+        <div class="gantt-chart">
+          <div class="gantt-axis">
+            {yearMarks.filter(ym => ym.year % 2 === 1 || ym.year === 2026).map(ym => (
+              <div class="gantt-year" style={`left: ${ym.left}%`}>{ym.year}</div>
+            ))}
+          </div>
+          {cityBars.map(bar => (
+            <div class="gantt-row">
+              <div class="gantt-city">{bar.city}</div>
+              <div class="gantt-track">
+                <div
+                  class={`gantt-bar ${bar.status}`}
+                  style={`left: ${bar.left}%; width: ${bar.width}%`}
+                />
+              </div>
+              <div class="gantt-label">
+                {bar.status === 'waiting' ? `${bar.months}+ mo` : `${bar.months} mo`}
+              </div>
+            </div>
+          ))}
+          <div class="gantt-legend">
+            <span class="gantt-legend-item"><span class="gantt-dot approved" /> Testing → launched</span>
+            <span class="gantt-legend-item"><span class="gantt-dot waiting" /> Testing → still waiting</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

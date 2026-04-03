@@ -1,0 +1,89 @@
+---
+import data from '../data/fatalities.json';
+
+const yearlyDeaths = data.bostonFatalities.byYear;
+const waymoReduction = data.waymoSafety.injuryCrashReduction;
+const conservativeShare = data.waymoSafety.conservativeVMTShare;
+const delayStartYear = parseInt(data.bostonFatalities.delayStart.split('-')[0], 10);
+---
+
+<section class="hero">
+  <h1>Boston Autonomous Vehicle Delay Dashboard</h1>
+
+  <div class="counter-wrapper">
+    <div class="counter-label">Estimated preventable deaths since Oct 2016</div>
+    <div class="counter-value" id="main-counter">--</div>
+    <div class="counter-sublabel">
+      Based on crash-reduction research and a 1.76% effective VMT-share assumption
+      (<a href="https://doi.org/10.1080/15389588.2024.2380786" target="_blank" rel="noopener" style="color: var(--text-muted);">Kusano et al.</a>)
+    </div>
+  </div>
+
+  <div class="counter-scenarios">
+    <div class="scenario">
+      <div class="scenario-label">Total Boston road deaths</div>
+      <div class="scenario-value" id="scenario-total" style="color: var(--text);">--</div>
+      <div class="scenario-detail">Since Oct 2016</div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ yearlyDeaths, waymoReduction, conservativeShare, delayStartYear }}>
+  // Build cumulative death milestones from delay start year
+  const milestones = [];
+  let cumulative = 0;
+
+  for (const entry of yearlyDeaths) {
+    if (entry.year < delayStartYear) continue;
+    const startOfYear = new Date(entry.year, 0, 1).getTime();
+    // For the delay start year (2016), start from Oct 1 instead of Jan 1
+    if (entry.year === delayStartYear) {
+      const delayStart = new Date(delayStartYear, 9, 1).getTime(); // Oct 1
+      milestones.push({ time: delayStart, deaths: 0 });
+      // Only count deaths from Oct-Dec (3/12 of the year)
+      cumulative += Math.round(entry.deaths * (3 / 12));
+    } else {
+      milestones.push({ time: startOfYear, deaths: cumulative });
+      cumulative += entry.deaths;
+    }
+  }
+  // Add one more for the end of last projected year
+  const lastEntry = yearlyDeaths[yearlyDeaths.length - 1];
+  const endOfLastYear = new Date(lastEntry.year + 1, 0, 1).getTime();
+  milestones.push({ time: endOfLastYear, deaths: cumulative });
+
+  function getCumulativeDeaths(now) {
+    const t = now.getTime();
+
+    if (t <= milestones[0].time) return 0;
+    if (t >= milestones[milestones.length - 1].time) {
+      return milestones[milestones.length - 1].deaths;
+    }
+
+    for (let i = 0; i < milestones.length - 1; i++) {
+      if (t >= milestones[i].time && t < milestones[i + 1].time) {
+        const progress = (t - milestones[i].time) / (milestones[i + 1].time - milestones[i].time);
+        return milestones[i].deaths + progress * (milestones[i + 1].deaths - milestones[i].deaths);
+      }
+    }
+    return 0;
+  }
+
+  const mainCounter = document.getElementById('main-counter');
+  const scenarioTotal = document.getElementById('scenario-total');
+
+  function updateCounter() {
+    const now = new Date();
+    const totalDeaths = getCumulativeDeaths(now);
+    const conservativeReduction = totalDeaths * waymoReduction * conservativeShare;
+
+    mainCounter.textContent = conservativeReduction < 1
+      ? conservativeReduction.toFixed(1)
+      : Math.round(conservativeReduction);
+    scenarioTotal.textContent = Math.round(totalDeaths);
+
+    requestAnimationFrame(updateCounter);
+  }
+
+  requestAnimationFrame(updateCounter);
+</script>

@@ -1,0 +1,114 @@
+---
+import data from '../data/fatalities.json';
+
+const events = data.timeline;
+const permits = data.permitTimeline;
+
+// Approximate YYYY-MM for each timeline node (for interpolation)
+const timelineDates = [
+  '2016-10', '2017-01', '2019-09', '2025-01', '2025-10', '2026-02', '2026-04'
+];
+
+const citySpans = permits
+  .filter(c => c.status === 'approved')
+  .map(city => ({
+    city: city.city.replace(/, \w+$/, ''),
+    testStart: city.testStart,
+    launch: city.commercialLaunch,
+  }));
+---
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">The Delay</h2>
+    <p class="section-subtitle">A timeline of Massachusetts's autonomous vehicle regulatory failure</p>
+
+    <div class="timeline" id="boston-timeline">
+      {events.map((event, i) => (
+        <div class={`timeline-node ${i === events.length - 1 ? 'active' : ''}`} data-date={timelineDates[i]}>
+          <div class="timeline-dot" />
+          <div class="timeline-date">{event.date}</div>
+          <div class="timeline-event">{event.event}</div>
+          <div class="timeline-detail">{event.detail}</div>
+          {event.cumulativeDeaths !== null && event.cumulativeDeaths > 0 && (
+            <div class="timeline-deaths">
+              {event.cumulativeDeaths} road deaths since delay began
+            </div>
+          )}
+        </div>
+      ))}
+
+      <div id="city-spans"></div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ citySpans, timelineDates }}>
+  function parseYM(ym) {
+    const [y, m] = ym.split('-').map(Number);
+    return new Date(y, m - 1, 1).getTime();
+  }
+
+  function positionCityBars() {
+    const timeline = document.getElementById('boston-timeline');
+    const nodes = timeline.querySelectorAll('.timeline-node');
+    const container = document.getElementById('city-spans');
+    if (!timeline || !nodes.length || !container) return;
+
+    container.innerHTML = '';
+    if (window.innerWidth < 768) return;
+
+    const timelineRect = timeline.getBoundingClientRect();
+    const nodeData = [];
+
+    nodes.forEach((node, i) => {
+      const rect = node.getBoundingClientRect();
+      nodeData.push({
+        time: parseYM(timelineDates[i]),
+        y: rect.top - timelineRect.top + 8,
+      });
+    });
+
+    function dateToY(dateStr) {
+      const t = parseYM(dateStr);
+      for (let i = 0; i < nodeData.length - 1; i++) {
+        if (t >= nodeData[i].time && t <= nodeData[i + 1].time) {
+          const p = (t - nodeData[i].time) / (nodeData[i + 1].time - nodeData[i].time);
+          return nodeData[i].y + p * (nodeData[i + 1].y - nodeData[i].y);
+        }
+      }
+      if (t <= nodeData[0].time) return nodeData[0].y;
+      return nodeData[nodeData.length - 1].y;
+    }
+
+    // Short names for labels
+    var shortName = { 'Los Angeles': 'LA' };
+
+    // Each city gets its own column
+    var columns = [2, 1, 0];
+
+    citySpans.forEach((city, i) => {
+      const startY = dateToY(city.testStart);
+      const endY = dateToY(city.launch);
+      const height = Math.max(endY - startY, 80);
+      const name = shortName[city.city] || city.city;
+      const col = columns[i] !== undefined ? columns[i] : i;
+
+      const span = document.createElement('div');
+      span.className = 'city-span';
+      span.style.top = startY + 'px';
+      span.style.height = height + 'px';
+      span.style.right = (10 + col * 170) + 'px';
+
+      span.innerHTML =
+        '<div class="city-span-label top">' + name + ' begins testing</div>' +
+        '<div class="city-span-bar"></div>' +
+        '<div class="city-span-label bottom">' + name + ' launches \u2713</div>';
+
+      container.appendChild(span);
+    });
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(positionCityBars));
+  window.addEventListener('resize', positionCityBars);
+</script>

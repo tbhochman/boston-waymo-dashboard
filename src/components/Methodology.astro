@@ -1,0 +1,92 @@
+---
+import data from '../data/fatalities.json';
+
+const sources = data.sources;
+const waymo = data.waymoSafety;
+---
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Methodology &amp; Sources</h2>
+    <p class="section-subtitle">Full transparency on data, assumptions, and limitations</p>
+
+    <div class="methodology-content">
+      <h3>How the counter works</h3>
+      <p>
+        The live counter estimates preventable deaths by interpolating Boston's cumulative
+        traffic fatalities since October 2016 (when Governor Baker signed Executive Order 572
+        creating the AV testing framework) and applying Waymo's peer-reviewed safety reduction factor.
+      </p>
+      <p>
+        Boston fatality data comes from Vision Zero / BPD crash reports supplemented with
+        MassDOT state police jurisdiction data for a complete city-wide picture.
+        Deaths are interpolated linearly within each year to produce a real-time estimate.
+      </p>
+
+      <h3>Estimate methodology</h3>
+      <p>
+        The headline figure applies an 85% any-injury-reported crash reduction to 1.76%
+        of vehicle miles traveled. The 85% comes from
+        <a href="https://doi.org/10.1080/15389588.2024.2380786" target="_blank" rel="noopener">Kusano et al. (2024)</a>,
+        which analyzed 7.1M rider-only miles. A subsequent
+        <a href="https://doi.org/10.1080/15389588.2025.2499887" target="_blank" rel="noopener">2025 study</a>
+        covering 56.7M miles found a 79% reduction in any-injury-reported crashes (95% CI: 71–85%)
+        and 85% fewer suspected serious injury+ crashes (95% CI: 39–99%).
+      </p>
+      <p>
+        The headline estimate uses an illustrative 1.76% effective VMT-share assumption.
+        This is derived by multiplying Boston ride-hail's share of city-core vehicle miles
+        traveled (about 8%,
+        <a href="https://www.prnewswire.com/news-releases/new-study-finds-over-97-of-vehicle-miles-traveled-in-major-us-cities-are-completed-by-personal-and-commercial-vehicles-300896095.html" target="_blank" rel="noopener">Fehr &amp; Peers, 2019</a>)
+        by a benchmark Waymo share of the rideshare market (about 22%, based on
+        <a href="https://www.appeconomyinsights.com/p/waymo-rideshare-revolution" target="_blank" rel="noopener">San Francisco at end of 2024</a>; data from YipitData).
+      </p>
+
+      <h3>Key assumptions &amp; limitations</h3>
+      <ul class="assumptions-list">
+        <li>
+          The 85% reduction comes from Kusano et al.'s analysis of {waymo.milesAnalyzed}
+          autonomous miles. Real-world deployment at scale could differ.
+        </li>
+        <li>
+          Fatality reductions are extrapolated from injury crash data. Fatality-specific
+          reductions may be higher or lower than the overall injury crash reduction.
+        </li>
+        <li>
+          The 1.76% effective VMT share is derived from Boston ride-hail VMT (~8%,
+          Fehr &amp; Peers 2019) multiplied by observed Waymo rideshare penetration
+          in San Francisco (~22% by end of 2024,
+          <a href="https://www.appeconomyinsights.com/p/waymo-rideshare-revolution" target="_blank" rel="noopener">YipitData</a>).
+        </li>
+        <li>
+          These figures represent potential lives saved, not certainties. AV technology
+          continues to improve, and real-world results will depend on deployment specifics.
+        </li>
+        <li>
+          Boston's road conditions, driver behavior, and infrastructure differ from cities
+          where Waymo data was collected (primarily Phoenix and San Francisco). Boston's
+          narrow streets, rotaries, and winter weather present unique challenges.
+        </li>
+      </ul>
+
+      <h3>Data sources</h3>
+      <ul>
+        {sources.map(source => (
+          <li>
+            <a href={source.url} target="_blank" rel="noopener">{source.name}</a>
+            <span>{source.description}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> This dashboard presents estimates based on
+        publicly available data and peer-reviewed research. It is intended to
+        illustrate the potential human cost of regulatory delay, not to predict
+        exact outcomes. The authors are advocates for autonomous vehicle deployment
+        and present this data in good faith to inform public discourse. All
+        sources are linked for independent verification.
+      </div>
+    </div>
+  </div>
+</section>
