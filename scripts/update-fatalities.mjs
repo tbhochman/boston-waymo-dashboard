@@ -153,18 +153,14 @@ async function main() {
 
   // Update the last timeline entry with current date and cumulative deaths
   const lastEvent = data.timeline[data.timeline.length - 1];
+  // Parse delay start year directly to avoid timezone issues
   const delayStartYear = parseInt(data.bostonFatalities.delayStart.split("-")[0], 10);
-  const delayStartMonth = parseInt(data.bostonFatalities.delayStart.split("-")[1], 10);
 
   // Calculate cumulative deaths since delay start
   let cumulative = 0;
   for (const entry of data.bostonFatalities.byYear) {
     if (entry.year < delayStartYear) continue;
-    if (entry.year === delayStartYear) {
-      // Partial first year: only count months after delay start (Oct 2016 = months 10-12 = 3/12)
-      const monthsInYear = 12 - delayStartMonth + 1;
-      cumulative += Math.round(entry.deaths * (monthsInYear / 12));
-    } else if (entry.year < currentYear) {
+    if (entry.year < currentYear) {
       cumulative += entry.deaths;
     } else if (entry.year === currentYear) {
       // Partial year: interpolate based on current month

@@ -48,7 +48,7 @@
       }
     ],
     "fatalitySource": "Boston Vision Zero / MassDOT crash data",
-    "delayStart": "2016-10-01",
+    "delayStart": "2025-01-01",
     "causeBreakdown": {
       "drunkDriving": 0.41,
       "speeding": 0.22,
@@ -152,43 +152,43 @@
       "date": "Oct 2016",
       "event": "Baker signs Executive Order 572",
       "detail": "Creates AV testing framework; MassDOT to oversee testing program",
-      "cumulativeDeaths": 0
+      "cumulativeDeaths": null
     },
     {
       "date": "2017",
       "event": "nuTonomy & Optimus Ride begin testing in Boston",
       "detail": "First AV companies approved under EO 572 — safety drivers required",
-      "cumulativeDeaths": 17
+      "cumulativeDeaths": null
     },
     {
       "date": "Sept 2019",
       "event": "MassDOT updates ADS testing application",
       "detail": "Revised process, but no path to driverless commercial operation",
-      "cumulativeDeaths": 62
+      "cumulativeDeaths": null
     },
     {
       "date": "Jan 2025",
       "event": "Driscoll & Cahill file AV legalization bills",
       "detail": "First legislation to permit fully autonomous vehicles on MA roads",
-      "cumulativeDeaths": 137
+      "cumulativeDeaths": 0
     },
     {
       "date": "Oct 2025",
       "event": "Boston City Council pushes back",
       "detail": "Proposes requiring human safety operators in all AV ride-hail vehicles",
-      "cumulativeDeaths": 151
+      "cumulativeDeaths": 16
     },
     {
       "date": "Feb 2026",
       "event": "Waymo announces return to Boston",
       "detail": "Manual-drive testing to validate 6th-gen system for local conditions",
-      "cumulativeDeaths": 155
+      "cumulativeDeaths": 22
     },
     {
       "date": "Apr 2026",
       "event": "Still no legislation permitting driverless operation",
       "detail": "Massachusetts remains without a legal framework for autonomous ride-hail",
-      "cumulativeDeaths": 161
+      "cumulativeDeaths": 25
     }
   ],
   "sources": [
