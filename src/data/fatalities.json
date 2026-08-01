@@ -142,7 +142,7 @@
       "city": "Boston, MA",
       "testStart": "2017-01",
       "commercialLaunch": null,
-      "months": 114,
+      "months": 115,
       "status": "waiting",
       "note": "AV testing with safety drivers since 2017 — still no legislation permitting driverless operation"
     }
@@ -185,10 +185,10 @@
       "cumulativeDeaths": 22
     },
     {
-      "date": "Jul 2026",
+      "date": "Aug 2026",
       "event": "Still no legislation permitting driverless operation",
       "detail": "Massachusetts remains without a legal framework for autonomous ride-hail",
-      "cumulativeDeaths": 30
+      "cumulativeDeaths": 31
     }
   ],
   "sources": [
